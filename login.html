@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Masuk - Perpustakaan SMP Yuppentek 2</title>
+    <link rel="stylesheet" href="stle.css">
+</head>
+<body>
+    <header id="site-header">
+        <div class="brand-group">
+            <a class="site-logo" href="index.html" aria-label="Beranda"><img src="logo.svg" alt="Logo SMP Yuppentek 2"></a>
+            <h1>Perpustakaan SMP Yuppentek 2</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Beranda</a></li>
+                <li><a href="katalog.html">Katalog Buku</a></li>
+                <li id="nav-auth"><a href="login.html">Masuk / Daftar</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main class="auth-page login-page">
+        <div class="auth-layout">
+            <aside class="auth-brand-panel">
+                <img src="logo.svg" alt="Logo SMP Yuppentek 2">
+                <h2>Perpustakaan<br>SMP Yuppentek 2</h2>
+                <p>Berbagi pengetahuan, membuka jendela dunia melalui buku dan membaca.</p>
+            </aside>
+            <section class="auth-card">
+                <p class="eyebrow">Selamat datang kembali</p>
+                <h2>Masuk ke Akun Anda</h2>
+                <p class="auth-description">Silakan masuk untuk mengakses layanan perpustakaan.</p>
+                <form id="login-form">
+                <label for="email">Email</label>
+                <input type="email" id="email" required>
+
+                <label for="password">Kata Sandi</label>
+                <input type="password" id="password" required>
+
+                <div class="auth-options">
+                    <label class="remember-option"><input type="checkbox" id="remember"> Ingat saya</label>
+                    <a href="kontak.html">Butuh bantuan?</a>
+                </div>
+                <button type="submit" class="btn-primary">Masuk</button>
+                </form>
+                <p class="muted auth-switch">Belum punya akun? <a href="register.html">Daftar di sini</a></p>
+                <p class="muted small">Demo admin: <code>admin@admin.com</code> / <code>admin123</code></p>
+            </section>
+        </div>
+    </main>
+
+    <div id="toast" class="toast" aria-live="polite"></div>
+    <script src="script.js"></script>
+    <script>
+        document.getElementById('login-form').addEventListener('submit', function(e){
+            e.preventDefault();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const ok = loginUser(email, password);
+            if(ok) {
+                showToast('Berhasil masuk. Mengarahkan...');
+                setTimeout(()=> { window.location = 'index.html'; }, 900);
+            } else {
+                showToast('Email atau kata sandi salah', true);
+            }
+        });
+    </script>
+</body>
+</html>

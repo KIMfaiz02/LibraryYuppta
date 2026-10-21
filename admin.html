@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laporan Admin - Perpustakaan SMP Yuppentek 2</title>
+    <link rel="stylesheet" href="stle.css">
+</head>
+<body>
+    <header id="site-header">
+        <div class="brand-group">
+            <a class="site-logo" href="index.html" aria-label="Beranda"><img src="logo.svg" alt="Logo SMP Yuppentek 2"></a>
+            <h1>Panel Admin</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Beranda</a></li>
+                <li><a href="katalog.html">Katalog Buku</a></li>
+                <li><a href="pencarian.html">Pencarian</a></li>
+                <li><a href="tentang.html">Tentang Kami</a></li>
+                <li><a href="kontak.html">Kontak</a></li>
+                <li id="nav-auth"><a href="login.html">Masuk / Daftar</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main class="admin-page">
+        <section id="admin-access-denied" class="access-denied" hidden>
+            <p class="eyebrow">Akses admin</p>
+            <h2>Halaman ini khusus admin.</h2>
+            <p>Masuk menggunakan akun admin untuk melihat statistik dan laporan.</p>
+            <a class="btn-primary" href="login.html">Masuk</a>
+        </section>
+        <div id="admin-workspace" hidden>
+            <div class="page-heading">
+                <p class="eyebrow">Ringkasan perpustakaan</p>
+                <h2>Dashboard &amp; Laporan</h2>
+                <p>Pantau anggota, koleksi, dan status transaksi peminjaman.</p>
+            </div>
+            <section id="admin-stats" class="admin-stats" aria-label="Statistik perpustakaan"></section>
+            <section class="report-section" aria-labelledby="report-title">
+                <div class="section-heading">
+                    <div>
+                        <p class="eyebrow">Catatan transaksi</p>
+                        <h2 id="report-title">Laporan Peminjaman &amp; Pengembalian</h2>
+                    </div>
+                    <label class="report-filter-label" for="report-filter">Status transaksi
+                        <select id="report-filter">
+                            <option value="all">Semua status</option>
+                            <option value="active">Sedang dipinjam</option>
+                            <option value="returned">Dikembalikan</option>
+                        </select>
+                    </label>
+                </div>
+                <div class="report-table-wrap">
+                    <table class="report-table">
+                        <thead>
+                            <tr>
+                                <th>Buku</th>
+                                <th>Anggota</th>
+                                <th>Tanggal pinjam</th>
+                                <th>Tenggat</th>
+                                <th>Tanggal kembali</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="loan-report-body"></tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2023 Perpustakaan Sekolah SMP Yuppentek 2. Semua hak dilindungi.</p>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>

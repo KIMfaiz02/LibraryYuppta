@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Katalog Buku - Perpustakaan SMP Yuppentek 2</title>
+    <link rel="stylesheet" href="stle.css">
+</head>
+<body>
+    <header id="site-header">
+        <div class="brand-group">
+            <a class="site-logo" href="index.html" aria-label="Beranda"><img src="logo.svg" alt="Logo SMP Yuppentek 2"></a>
+            <h1>Perpustakaan SMP Yuppentek 2</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Beranda</a></li>
+                <li><a href="katalog.html">Katalog Buku</a></li>
+                <li><a href="pencarian.html">Pencarian</a></li>
+                <li><a href="tentang.html">Tentang Kami</a></li>
+                <li><a href="kontak.html">Kontak</a></li>
+                <li id="nav-auth"><a href="login.html">Masuk / Daftar</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main class="catalog-main">
+        <section id="katalog" class="catalog-panel">
+            <div class="catalog-heading">
+                <div>
+                    <p class="eyebrow">Jelajahi koleksi</p>
+                    <h2>Daftar Buku</h2>
+                    <p>Temukan bacaan menarik dari koleksi Perpustakaan SMP Yuppentek 2.</p>
+                </div>
+                <form class="catalog-search" action="pencarian.html" method="get" role="search">
+                    <label class="visually-hidden" for="catalog-query">Cari buku</label>
+                    <input id="catalog-query" name="q" type="search" placeholder="Cari buku...">
+                    <button class="btn-primary" type="submit" aria-label="Cari buku">&#128269;</button>
+                </form>
+            </div>
+            <div class="catalog-layout">
+                <aside class="catalog-categories" aria-labelledby="category-title">
+                    <h3 id="category-title">Kategori</h3>
+                    <div id="catalog-category-list" class="category-list"></div>
+                </aside>
+                <div class="catalog-results">
+                    <div class="katalog-header">
+                        <div id="admin-controls" class="admin-controls" style="display:none;">
+                            <div class="admin-section">
+                                <button id="show-add-book" class="btn-secondary">Tambah Buku</button>
+                                <form id="add-book-form" class="add-book-form" style="display:none;">
+                                    <input id="new-title" placeholder="Judul buku" required>
+                                    <input id="new-author" placeholder="Penulis" required>
+                                    <select id="new-genre" aria-label="Pilih genre"></select>
+                                    <input id="new-stock" type="number" min="0" step="1" value="1" placeholder="Jumlah stok" aria-label="Jumlah stok" required>
+                                    <input id="new-img" type="url" placeholder="URL gambar (opsional)" aria-label="URL gambar sampul">
+                                    <button type="submit" class="btn-primary">Simpan</button>
+                                </form>
+                            </div>
+                            <div class="admin-section">
+                                <button id="show-genre-manager" class="btn-secondary">Kelola Genre</button>
+                                <div id="genre-manager" style="display:none; margin-left:8px;">
+                                    <form id="add-genre-form" style="display:flex; gap:0.5rem; align-items:center; margin-bottom:0.6rem;">
+                                        <input id="genre-name" placeholder="Nama genre" required>
+                                        <button type="submit" class="btn-primary">Tambah Genre</button>
+                                    </form>
+                                    <div id="genre-list" class="genre-list"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="book-list" class="book-list"></div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2023 Perpustakaan Sekolah SMP Yuppentek 2. Semua hak dilindungi.</p>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pencarian - Perpustakaan Sekolah SMP Yuppentek 2</title>
+    <link rel="stylesheet" href="stle.css">
+</head>
+<body>
+    <header id="site-header">
+        <div class="brand-group">
+            <a class="site-logo" href="index.html" aria-label="Beranda"><img src="logo.svg" alt="Logo SMP Yuppentek 2"></a>
+            <h1>Perpustakaan SMP Yuppentek 2</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Beranda</a></li>
+                <li><a href="katalog.html">Katalog Buku</a></li>
+                <li><a href="pencarian.html">Pencarian</a></li>
+                <li><a href="tentang.html">Tentang Kami</a></li>
+                <li><a href="kontak.html">Kontak</a></li>
+                <li id="nav-auth"><a href="login.html">Masuk / Daftar</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main class="search-page">
+        <section id="pencarian">
+            <div class="search-hero">
+                <p class="eyebrow">Temukan bacaan favoritmu</p>
+                <h2>Cari Buku yang Kamu Butuhkan</h2>
+                <p>Masukkan judul, penulis, atau kata kunci untuk menemukan buku.</p>
+                <div class="search-row" role="search">
+                    <label class="visually-hidden" for="search">Masukkan judul atau penulis</label>
+                    <input type="search" id="search" placeholder="Masukkan judul atau penulis...">
+                    <select id="genre-filter" aria-label="Filter kategori"><option value="">Semua Genre</option></select>
+                    <button id="search-btn" onclick="cariBuku()">Cari</button>
+                </div>
+            </div>
+            <div class="search-results-panel">
+                <div class="search-results-heading">
+                    <div>
+                        <p class="eyebrow">Koleksi perpustakaan</p>
+                        <h2>Hasil Pencarian</h2>
+                    </div>
+                    <label class="sort-control">Urutkan
+                        <select id="search-sort" aria-label="Urutkan hasil pencarian">
+                            <option value="relevance">Relevansi</option>
+                            <option value="title">Judul A–Z</option>
+                        </select>
+                    </label>
+                </div>
+                <div id="hasil"></div>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2023 Perpustakaan Sekolah SMP Yuppentek 2. Semua hak dilindungi.</p>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>
