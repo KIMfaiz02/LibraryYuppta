@@ -222,7 +222,7 @@ function ensureDemoAdmin() {
 function registerUser({ name, email, password, role = 'user', nis = '', className = '' }) {
     const u = loadUsers();
     if (u.find(x => x.email === email)) return false;
-    u.push({ name, email, password, role, nis, className });
+    u.push({ name, email, password, role, nis, className, createdAt: new Date().toISOString() });
     saveUsers(u);
     return true;
 }
@@ -634,6 +634,8 @@ function renderAdminDashboard() {
             <article class="admin-stat"><span>Sudah dikembalikan</span><strong>${returnedLoans.length}</strong><small>transaksi selesai</small></article>`;
     }
 
+    renderAdminUserAccounts(users);
+
     const filter = document.getElementById('report-filter');
     const filterValue = filter ? filter.value : 'all';
     const visibleLoans = loans.filter(loan => {
@@ -660,6 +662,114 @@ function renderAdminDashboard() {
             <td><span class="loan-status ${loan.returnedAt ? 'is-returned' : 'is-active'}">${status}</span></td>
         </tr>`;
     }).join('');
+}
+
+function renderAdminUserAccounts(users = loadUsers().filter(member => member.role !== 'admin')) {
+    const body = document.getElementById('user-account-body');
+    if (!body) return;
+
+    if (!users.length) {
+        body.innerHTML = '<tr><td class="report-empty" colspan="7">Belum ada akun pengguna terdaftar.</td></tr>';
+        return;
+    }
+
+    const sortedUsers = [...users].sort((a, b) => {
+        const dateA = Date.parse(a.createdAt || '');
+        const dateB = Date.parse(b.createdAt || '');
+        return (Number.isNaN(dateB) ? 0 : dateB) - (Number.isNaN(dateA) ? 0 : dateA);
+    });
+
+    body.innerHTML = sortedUsers.map(member => `
+        <tr>
+            <td><strong>${escapeHtml(member.name || '-')}</strong></td>
+            <td>${escapeHtml(member.email || '-')}</td>
+            <td>${escapeHtml(member.nis || '-')}</td>
+            <td>${escapeHtml(member.className || '-')}</td>
+            <td>${member.createdAt ? formatDate(member.createdAt) : 'Tidak tercatat'}</td>
+            <td>
+                <details class="account-password-reset">
+                    <summary class="btn-secondary">Atur password baru</summary>
+                    <form class="account-password-form" data-account-email="${escapeHtml(member.email || '')}">
+                        <label>Password baru
+                            <input type="password" name="new-password" minlength="8" autocomplete="new-password" required>
+                        </label>
+                        <label>Ulangi password baru
+                            <input type="password" name="confirm-password" minlength="8" autocomplete="new-password" required>
+                        </label>
+                        <button class="btn-primary" type="submit">Simpan password</button>
+                    </form>
+                </details>
+            </td>
+            <td><button type="button" class="btn-danger account-delete-button" data-delete-email="${escapeHtml(member.email || '')}" data-delete-name="${escapeHtml(member.name || 'pengguna')}">Hapus akun</button></td>
+        </tr>`).join('');
+
+    body.querySelectorAll('.account-delete-button').forEach(button => {
+        button.addEventListener('click', () => {
+            const currentUser = getCurrentUser();
+            if (!currentUser || currentUser.role !== 'admin') {
+                showToast('Hanya admin yang dapat menghapus akun pengguna', true);
+                return;
+            }
+
+            const email = button.dataset.deleteEmail;
+            const accounts = loadUsers();
+            const account = accounts.find(member => member.email === email && member.role !== 'admin');
+            if (!account) {
+                showToast('Akun pengguna tidak ditemukan', true);
+                renderAdminDashboard();
+                return;
+            }
+
+            const hasActiveLoans = loadLoans().some(loan => loan.email === email && !loan.returnedAt);
+            if (hasActiveLoans) {
+                showToast('Akun belum dapat dihapus karena masih memiliki peminjaman aktif', true);
+                return;
+            }
+
+            const confirmed = confirm(`Hapus akun ${account.name || 'pengguna'} (${account.email})? Riwayat peminjaman tetap disimpan.`);
+            if (!confirmed) return;
+
+            saveUsers(accounts.filter(member => member.email !== email));
+            renderAdminDashboard();
+            showToast('Akun pengguna berhasil dihapus');
+        });
+    });
+
+    body.querySelectorAll('.account-password-form').forEach(form => {
+        form.addEventListener('submit', event => {
+            event.preventDefault();
+            const currentUser = getCurrentUser();
+            if (!currentUser || currentUser.role !== 'admin') {
+                showToast('Hanya admin yang dapat mengatur password pengguna', true);
+                return;
+            }
+
+            const values = new FormData(form);
+            const newPassword = String(values.get('new-password') || '');
+            const confirmPassword = String(values.get('confirm-password') || '');
+            if (newPassword.length < 8) {
+                showToast('Password baru harus memiliki minimal 8 karakter', true);
+                return;
+            }
+            if (newPassword !== confirmPassword) {
+                showToast('Password baru tidak cocok', true);
+                return;
+            }
+
+            const accounts = loadUsers();
+            const account = accounts.find(member => member.email === form.dataset.accountEmail && member.role !== 'admin');
+            if (!account) {
+                showToast('Akun pengguna tidak ditemukan', true);
+                renderAdminDashboard();
+                return;
+            }
+
+            account.password = newPassword;
+            saveUsers(accounts);
+            renderAdminDashboard();
+            showToast('Password baru berhasil disimpan. Berikan kepada pengguna melalui cara yang aman.');
+        });
+    });
 }
 
 /* ---------- Admin controls ---------- */

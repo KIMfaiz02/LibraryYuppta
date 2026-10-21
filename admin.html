@@ -37,6 +37,34 @@
                 <p>Pantau anggota, koleksi, dan status transaksi peminjaman.</p>
             </div>
             <section id="admin-stats" class="admin-stats" aria-label="Statistik perpustakaan"></section>
+            <section class="report-section user-management" aria-labelledby="user-management-title">
+                <div class="section-heading">
+                    <div>
+                        <p class="eyebrow">Data anggota</p>
+                        <h2 id="user-management-title">Akun Pengguna</h2>
+                        <p class="section-description">Lihat akun yang telah terdaftar dan bantu pengguna mengatur ulang password.</p>
+                    </div>
+                </div>
+                <div class="account-security-note" role="note">
+                    Password tidak ditampilkan demi keamanan. Admin dapat membantu dengan menetapkan password baru.
+                </div>
+                <div class="report-table-wrap">
+                    <table class="report-table account-table">
+                        <thead>
+                            <tr>
+                                <th>Nama</th>
+                                <th>Email</th>
+                                <th>NIS</th>
+                                <th>Kelas</th>
+                                <th>Tanggal daftar</th>
+                                <th>Password</th>
+                                <th>Tindakan</th>
+                            </tr>
+                        </thead>
+                        <tbody id="user-account-body"></tbody>
+                    </table>
+                </div>
+            </section>
             <section class="report-section" aria-labelledby="report-title">
                 <div class="section-heading">
                     <div>
