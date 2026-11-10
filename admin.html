@@ -79,19 +79,23 @@
                             </table>
                         </div>
                     </section>
-                    <section class="report-section" aria-labelledby="report-title">
+                    <section id="report-section" class="report-section" aria-labelledby="report-title">
                         <div class="section-heading">
                             <div>
                                 <p class="eyebrow">Catatan transaksi</p>
                                 <h2 id="report-title">Laporan Peminjaman &amp; Pengembalian</h2>
+                                <p id="report-print-meta" class="report-print-meta"></p>
                             </div>
-                            <label class="report-filter-label" for="report-filter">Status transaksi
-                                <select id="report-filter">
-                                    <option value="all">Semua status</option>
-                                    <option value="active">Sedang dipinjam</option>
-                                    <option value="returned">Dikembalikan</option>
-                                </select>
-                            </label>
+                            <div class="report-actions">
+                                <label class="report-filter-label" for="report-filter">Status transaksi
+                                    <select id="report-filter">
+                                        <option value="all">Semua status</option>
+                                        <option value="active">Sedang dipinjam</option>
+                                        <option value="returned">Dikembalikan</option>
+                                    </select>
+                                </label>
+                                <button id="export-report-pdf" class="btn-primary" type="button">Cetak / Simpan PDF</button>
+                            </div>
                         </div>
                         <div class="report-table-wrap">
                             <table class="report-table">

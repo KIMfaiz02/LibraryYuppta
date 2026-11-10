@@ -20,6 +20,10 @@ Alternatif tanpa XAMPP: setelah database MySQL berjalan dan konfigurasi koneksi 
 
 Jangan membuka halaman dengan klik ganda atau alamat `file://`; PHP harus dijalankan melalui web server. Jangan gunakan server bawaan PHP untuk deployment publik.
 
+## Ekspor laporan
+
+Admin dapat membuka **Laporan Peminjaman & Pengembalian**, memilih status transaksi yang ingin ditampilkan, lalu menekan **Cetak / Simpan PDF**. Pada dialog cetak browser, pilih **Save as PDF / Simpan sebagai PDF**. PDF berisi laporan sesuai filter yang sedang dipilih.
+
 ## Akun dan data lama
 
 Pendaftaran dari halaman web hanya membuat akun anggota. Hak admin hanya dapat diberikan pengelola database/server, misalnya dengan `create_admin.php`. Password baru disimpan menggunakan `password_hash`; pengguna tetap masuk menggunakan password yang sama. Untuk akun lama yang kolom `password_hash`-nya masih berisi password teks biasa, login pertama menerima password tersebut dan langsung menggantinya dengan hash. Password teks biasa tidak dipertahankan setelah login berhasil.

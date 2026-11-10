@@ -124,6 +124,8 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .report-table td span{ display:block; margin-top:.2rem; color:var(--muted); font-size:.78rem }
 .report-table td .loan-status{ display:inline-block; margin:0 }
 .report-empty{ padding:1.5rem !important; text-align:center; color:var(--muted) !important }
+.report-actions{ display:flex; align-items:end; gap:.65rem }
+.report-print-meta{ display:none; margin:.4rem 0 0; color:#526579; font-size:.8rem }
 .user-management{ margin-bottom:2rem }
 .user-management .section-heading{ margin-bottom:.6rem }
 .section-description{ margin:.35rem 0 0; color:var(--muted); font-size:.88rem }
@@ -1445,4 +1447,44 @@ footer:not(.about-footer){ background:#fff; color:#66788e; border-color:#e5edf5 
     .home-stat-card{ grid-template-columns:34px minmax(0,1fr); column-gap:.45rem }
     .home-book-card img{ height:130px }
     .admin-stats{ grid-template-columns:1fr 1fr }
+}
+
+@page{ size:landscape; margin:12mm }
+@media print{
+    body.report-printing > *{ display:none !important }
+    body.report-printing > main{
+        display:block !important;
+        max-width:none;
+        margin:0;
+        padding:0;
+    }
+    body.report-printing #admin-access-denied,
+    body.report-printing .admin-sidebar,
+    body.report-printing .admin-dashboard-content > .page-heading,
+    body.report-printing #admin-stats,
+    body.report-printing .user-management{ display:none !important }
+    body.report-printing #admin-workspace,
+    body.report-printing .admin-dashboard-layout,
+    body.report-printing .admin-dashboard-content,
+    body.report-printing #report-section{
+        display:block !important;
+        width:100%;
+        min-width:0;
+        margin:0;
+        padding:0;
+        border:0;
+        box-shadow:none;
+        background:#fff;
+    }
+    body.report-printing #report-section .section-heading{ align-items:flex-start }
+    body.report-printing #report-section .report-actions,
+    body.report-printing #report-section .eyebrow{ display:none !important }
+    body.report-printing #report-section .report-print-meta{ display:block }
+    body.report-printing #report-section .report-table-wrap{ overflow:visible; border:0 }
+    body.report-printing #report-section .report-table{ width:100%; white-space:normal }
+    body.report-printing #report-section .report-table th,
+    body.report-printing #report-section .report-table td{ padding:.5rem; border:1px solid #cbd5df; color:#172b3f }
+    body.report-printing #report-section .report-table th{ background:#edf3f8 !important; print-color-adjust:exact; -webkit-print-color-adjust:exact }
+    body.report-printing #report-section .loan-status{ color:#172b3f; background:transparent; padding:0 }
+    body.report-printing #report-section .report-empty{ text-align:left }
 }

@@ -470,6 +470,15 @@ async function renderAdminDashboard() {
     }
     renderAdminUserAccounts(data.users);
     const filter = document.getElementById('report-filter')?.value || 'all';
+    const filterSelect = document.getElementById('report-filter');
+    const filterLabel = filterSelect?.selectedOptions[0]?.textContent || 'Semua status';
+    const printMeta = document.getElementById('report-print-meta');
+    if (printMeta) {
+        printMeta.textContent = `Filter: ${filterLabel} · Dicetak: ${new Intl.DateTimeFormat('id-ID', {
+            dateStyle: 'long',
+            timeStyle: 'short'
+        }).format(new Date())}`;
+    }
     const loans = data.loans.filter(loan =>
         filter === 'active' ? !loan.returnedAt :
         filter === 'returned' ? Boolean(loan.returnedAt) : true);
@@ -558,6 +567,13 @@ function initPageHandlers() {
     document.getElementById('genre-filter')?.addEventListener('change', cariBuku);
     document.getElementById('search-sort')?.addEventListener('change', cariBuku);
     document.getElementById('report-filter')?.addEventListener('change', renderAdminDashboard);
+    document.getElementById('export-report-pdf')?.addEventListener('click', () => {
+        document.body.classList.add('report-printing');
+        window.addEventListener('afterprint', () => {
+            document.body.classList.remove('report-printing');
+        }, { once: true });
+        window.print();
+    });
 
     const addBookButton = document.getElementById('show-add-book');
     const addBookForm = document.getElementById('add-book-form');
